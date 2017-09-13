@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="reader" ng-controller="readerController">
+<head>
+  <script src ="angular.min.js"></script>
+  <script src ="jquery.min.js"></script>
+  <script src="textReader.js"></script>
+  <link rel="stylesheet" href="textReader.css">
+</head>
+<body>
+  <div ng-hide ="fileExists">
+  <input type="text" ng-model="name">
+  <button ng-click="fetchFileContent()"> open</button>
+  </div>
+  <div ng-if ="fileNotExists">
+    <div ng-show ="Error"> 
+      <h5> {{Error}} </h5>
+    </div>
+  </div>
+  <div ng-if ="fileExists">
+    <h1> fileReader </h1>
+    <textarea rows ="1" cols="10" readonly>{{name}}</textarea>
+    <select ng-options="s for s in fontSize" ng-model="size" ng-change ="getselectval(size)">
+     <option value ="">--fontSize--</option>
+    </select>
+    <label ng-style ="fontObj" ng-bind = "fileContent" ></label><br>
+    <button ng-click="nextPage()"> next </button>
+    <button ng-click="backPage()"> previous </button>
+    {{count}}
+  </div>
+</body>
+</html>
