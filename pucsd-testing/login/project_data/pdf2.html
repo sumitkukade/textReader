@@ -1,0 +1,128 @@
+<html ng-app="app">
+<link rel="stylesheet" href="./code.css"/>
+<body ng-controller="DemoController">
+<br><button pdf-save-button="idOne" pdf-name="%s_FEES_STRUCTURE.pdf" class="btn">PRINT PDF</button><p>
+<a href="log_staff.py">Cancel </a>
+	<div pdf-save-content="idOne" >
+
+	   
+		<h1 align="center">DEPARTMENT OF COMPUTER SCIENCE </h1>
+		<h2 align="center">SAVITRIBAI PHULE PUNE UNIVERSITY</h2>
+		<h3 align="right"> Phone: 020-25601446
+		<h3 align="right">   Fax: 020-256906361
+		  <h3 align="right">   Email:pucsd@pun.unipune.ac.in</h3>
+		  Ref. No. : CSD/<b>%s</b>
+		  <h3 align="right"> Date:%s</h3>
+To<br>
+The Branch Manager<br>
+<b>%s</b><br>
+		  
+Sir,<p>
+       This letter has been issued on the basis of request by the student for the Purpose of getting Professional Education loan from your Bank.<p>
+
+         We, hereby certify that <b>%s</b><b>%s</b>  is a bonafide student of this department studying in Ist year of <b>%s</b> the said course is of 3 year's duration.<p>
+
+		    The minimum fees for Maharashtra Domicile student belonging Open Category are as detailed below. (The tuition & Lab fees may increase as per the university rules & norms)<p>
+		    <h2 align="center">Fees Structure</h2>
+
+<table  border="1" align="center">
+  <tr>
+    <th>Year</th>
+<th colspan=2>1st Year </th>
+<th colspan=2>2 nd Year</th>
+<th colspan=2>3 rd Year</th>
+
+</tr>
+  <tr>
+    <td>fees detail</td>
+  <td >MCA
+(1st Sem.)</td>
+  <td>MCA
+    (2nd Sem.)</td>
+    <td>MCA
+      (3rd Sem.)</td>
+    <td>MCA
+(4th Sem.)
+</td>
+<td>MCA
+(5th Sem.)
+</td>
+  <td>MCA
+(6th Sem.)
+</td>  
+  </tr>
+
+    <tr>
+    <td>Tuition Fees</td>
+  <td >%d</td>
+  <td>%d</td>
+    <td>%d</td>
+    <td>%d
+</td>
+ <td>%d</td>
+    <td>%d
+</td>
+    
+  </tr>
+
+<tr>
+    <td>Lab Fees</td>
+  <td >%d</td>
+  <td>%d</td>
+    <td>%d</td>
+    <td>%d
+</td>
+ <td>%d</td>
+    <td>%d
+</td>
+    
+</tr>
+<tr>
+    <td>other Fees</td>
+  <td >%d</td>
+  <td>%d</td>
+    <td>%d</td>
+    <td>%d
+</td>
+ <td>%d</td>
+    <td>%d
+</td>
+    
+</tr>
+<tr>
+    <td>Total Fees</td>
+  <td >%d</td>
+  <td>%d</td>
+    <td>%d</td>
+    <td>%d
+</td>
+ <td>%d</td>
+    <td>%d
+</td>
+    
+</tr>
+</table>
+<br><br>
+<b>The amount towards fees can be paid through the Demand Draft to be in favour of 'Finance & Accounts Officer, Savitribai Phule Pune University', Payable at Pune.</b><p>
+
+      Sincerely Yours,<br>
+      <h3>Head</h3>
+	</div>
+       
+	<script src="./angular.min.js"></script>
+	<script src="./jquery.min.js"></script>
+	<script src="https://cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+	<script src="./jspdf.debug.js"></script>
+	<script src="./saveHtmlToPdf.js"></script>
+<script id="tpl.tpl" type="text/ng-template">
+	Content of ng-template
+</script>
+<script>
+var app = angular.module('app' , ['htmlToPdfSave']) ;
+app.controller('DemoController' , function($scope) {
+
+});
+</script>
+	
+</body>
+</html>

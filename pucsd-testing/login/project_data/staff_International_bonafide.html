@@ -1,0 +1,46 @@
+<!DOCTYPE html>            
+<html>            
+<head>
+
+<link rel="stylesheet" href="./code.css"/>
+<body >
+ 
+<div ng-app="myApp" ng-controller="datCtrl">
+<script src="./angular.min.js"></script>           
+<form method="post" action=staff_International_bonafide.py>
+ <h1> Details</h1>
+   <label>Ref No:</label>
+
+ <input type =number required="" value=%s name=dossss  maxlength="30"><p> <input type=hidden name='rln' value=%s>
+    	   	
+                 <div>Date:<input type=Date  name='date' value={{today|date:"d/MM/yyyy"}}></div><p>
+
+
+ REP NO:<input type="number" required=""  style="width:400px;height:20px;" name="repno" ng-model="repno" maxlength="30"><br></br>
+ Unique NO:<input type="number" required=""  style="width:400px;height:20px;" name="uno" ng-model="uno" maxlength="30"><br></br>
+ StayVisaUpTo:<input type="number" required=""  style="width:400px;height:20px;" name="uto" ng-model="uto" maxlength="30"><br></br>
+ RegularOrBacklog:<input type="text" required=""  style="width:400px;height:20px;" name="rob" ng-model="rob" maxlength="30"><br></br>
+
+<script>
+    var app = angular.module('myApp', []);
+      app.controller('datCtrl', function($scope) {
+        $scope.today = new Date();
+       
+});
+</script>   
+</div>  
+<input type=submit value="submit">   
+</form>
+<span style="margin-left:0.5em;"></span>
+<form method="post" action="./log_staff.py">
+   <input type="submit"  value="Back">
+</form>          	
+</body>
+</head>
+</html>
+
+
+
+
+
+

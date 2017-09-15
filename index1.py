@@ -1,8 +1,32 @@
 import sqlite3,sys,time
+import fractions
 import textwrap
+import json
 import os
 
-textWrapWidthList = [(10,150,30),(15,100,20),(20,70,15),(25,55,12)]
+textWrapWidthList = [(10,145,30),(15,100,20),(20,71,15),(25,57,12)]
+
+def findLcmOfTwoNum(num1,num2):
+    return (num1*num2)/fractions.gcd(num1,num2)
+
+def lcm(numList):
+    return reduce(lambda x,y:findLcmOfTwoNum(x,y),numList)
+
+def findLineCount(numList):
+    lcmNum =lcm(numList)
+    return map(lambda x : lcmNum/x,numList)
+
+def findCharacterWithinLine(numList):
+    lcmNum = lcm(numList)
+    divList = []
+    gcdNum = reduce(lambda x,y:fractions.gcd(x,y),numList)
+    divList = map(lambda x: x/gcdNum ,numList)
+    return map(lambda x : lcmNum/x,divList)
+
+def maketextWraperList(numList):
+    lineCountList = findLineCount(numList)
+    characterCountList = findCharacterWithinLine(numList)
+    return zip(numList,lineCountList,characterCountList)
 
 def sqliteConnection():
     conn = sqlite3.connect("/home/reshma/InternShip/textReader/file.db")
@@ -21,20 +45,18 @@ def fileExists(fileName):
     isfileExist = fileExists[0][0]
     return isfileExist
 
-def makePageWiseContent(data,fontSize):
+
+
+def makePageWiseContent(data,fontSize,cnt):
+    textList = []
     textList = filter(lambda x: x[0]==fontSize ,textWrapWidthList)[0][1:]
-    wrapper = textwrap.TextWrapper(width=textList[0]*textList[1])
+    n = (textList[0]*textList[1])
+    wrapper = textwrap.TextWrapper(width=n)
     dedented_text = textwrap.dedent(text=data)
     original = wrapper.fill(text=dedented_text)
     originalList = original.split("\n")
-    o = []
-    index = 0
-    for elem in originalList:
-        fileData = {}
-        fileData[str(index)] = elem
-        index = index + 1
-        o.append(fileData)
-    return o
+    oLen = len(originalList)
+    return originalList[cnt]
 
 
 
@@ -58,15 +80,25 @@ def getFontSize():
     return dataList
 
 
-def main():
-    fileName = "r.txt"
-    fontSize = 15
+def main(data):
+    data_dict = json.loads(data)
+    fontSize = data_dict["fontSize"] 
+    fileName = data_dict["fileName"]
+    pageCount = data_dict["pageCount"]
+    fontSize = int(fontSize)
+    pageCount = int(pageCount)
     if(fileExists(fileName) == 0):
         return 0
     else:
         fileContent = ""
-        fontList = getFontSize()
         data = fetchFileContent(fileName)
-        return makePageWiseContent(data,fontSize)
+        return makePageWiseContent(data,fontSize,pageCount)
 
+def fileContentWithPageNumber(data):
+    data_dict = json.loads(data)
+    fontSize = data_dict["fontSize"]
+    fileName = data_dict["fileName"]
+    pageCount = data_dict["pageCount"]
+    fileContent = fetchFileContent(fileName)
+    return makePageWiseContent(fileContent,fontSize,pageCount)
 

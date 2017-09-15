@@ -1,0 +1,45 @@
+<html ng-app="app">
+<link rel="stylesheet" href="./code.css"/>
+<body ng-controller="DemoController">
+<button pdf-save-button="idOne" pdf-name="%s_NO_DUES.pdf" class="btn">PRINT PDF</button>
+
+<a href="log_staff.py">Cancel </a>
+</form>
+  <div pdf-save-content="idOne" >
+<h1 align="center">DEPARTMENT OF COMPUTER SCIENCE </h1>
+<h2 align="center">SAVITRIBAI PHULE PUNE UNIVERSITY</h2>
+	<h3 align="right"> Phone: 020-25601446
+	<h3 align="right">   Fax: 020-256906361
+	  <h3 align="right">   Email:pucsd@pun.unipune.ac.in</h3>
+	  Ref. No. : CSD/%s
+	  <h3 align="right"> Date:%s</h3>
+	 To<p>
+1. Librarian Jaykar Library<p>			
+2. Librarian Computer Science Dept<p>		 
+3. Hostel Office<p>
+4.Refactory<p>
+5.Computer Science Office<p>
+<b>%s</b><b>%s</b>Roll No<b>%d</b>
+Is leaving the <b>%s</b> (Computer Science) Programs Please recover any dues, outstanding  against %s and give %s no dues.<p>
+	    Yours  Sincerely.<p><br>
+Jaykar Library<p><br><br>
+	    Computer Science Library<p><br><br>
+	    Hostel Office <p><br><br>  Refectory<p><br>
+Computer Science Office</div>
+	<script src="./angular.min.js"></script>
+	<script src="./jquery.min.js"></script>
+	<script src="https://cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>
+	<script src="./jspdf.debug.js"></script>
+	<script src="./saveHtmlToPdf.js"></script>
+<script id="tpl.tpl" type="text/ng-template">
+	Content of ng-template
+</script>
+<script>
+var app = angular.module('app' , ['htmlToPdfSave']) ;
+app.controller('DemoController' , function($scope) {
+
+});
+</script>
+	
+</body>
+</html>
