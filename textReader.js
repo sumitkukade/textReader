@@ -4,7 +4,6 @@ app.controller("readerController", function($scope) {
     $scope.fetchFileContent = function() {
     $scope.fontSize = ["10","15","20","25","30"];
     var request = {}
-    $scope.count = 0;
     $scope.cnt = 0;
     request["fileName"] = $scope.name;
     request["fontSize"] = fontSize;
@@ -15,20 +14,37 @@ app.controller("readerController", function($scope) {
         alert("Invalid file");
       } else {
            $scope.fileExists =  1;
-           $scope.fileContent = response;
+            $scope.fileData = JSON.parse(response)
            $scope.fontObj = {
               "font-size": fontSize+"px"
            }
       }
     });
+    $scope.nextPage = function() {
+      if($scope.count < ($scope.fileData["sizeOfFile"])) {
+         $scope.count++;
+      }
+      else {
+        $scope.count = 0;
+      }
     }
+
+    $scope.backPage = function() {
+     if($scope.count > 0 ) {
+      $scope.count--;
+     }
+      else {
+        $scope.count = $scope.fileData["sizeOfFile"];
+      }
+    }
+ }
     $scope.getselectval = function(size) {
          var request = {}
          request["fontSize"] = size;
          request["fileName"] = $scope.name;
          request["pageCount"] = $scope.cnt;
          alert($scope.name+size+$scope.cnt);
-         $.post("index.py/fileContentWithPageNumber",{data:JSON.stringify(request)}).done(function(response) {
+         $.post("index.py/main",{data:JSON.stringify(request)}).done(function(response) {
              alert(response);
               console.log($scope.fileContent);
          });
@@ -36,30 +52,5 @@ app.controller("readerController", function($scope) {
               "font-size": size+"px"
          }
     }
-    $scope.nextPage = function() {
-      var request = {}
-      $scope.count++;
-      if($scope.count % 2 ==0) {
-        $scope.cnt = $scope.count/2;
-        request["fontSize"] = fontSize;
-        request["fileName"] = $scope.name;
-        request["pageCount"] = $scope.cnt;
-        $.post("index.py/fileContentWithPageNumber",{data:JSON.stringify(request)}).done(function(response) {
-            $scope.fileContent = response;
-        });
-      }
-    }
-    $scope.backPage = function() {
-      var request = {}
-      $scope.count--;
-      if($scope.count % 2 ==0) {
-        $scope.cnt = $scope.count/2;
-        request["fontSize"] = fontSize;
-        request["fileName"] = $scope.name;
-        request["pageCount"] = $scope.cnt;
-        $.post("index.py/fileContentWithPageNumber",{data:JSON.stringify(request)}).done(function(response) {
-            $scope.fileContent = response;
-        });
-      }
-    }
+
 });

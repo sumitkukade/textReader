@@ -49,6 +49,8 @@ def fileExists(fileName):
 
 def makePageWiseContent(data,fontSize,cnt):
     textList = []
+    textWrapWidthList = []
+    textWrapWidthList = maketextWraperList([10,15,20,25,30])
     textList = filter(lambda x: x[0]==fontSize ,textWrapWidthList)[0][1:]
     n = (textList[0]*textList[1])
     wrapper = textwrap.TextWrapper(width=n)
@@ -56,7 +58,16 @@ def makePageWiseContent(data,fontSize,cnt):
     original = wrapper.fill(text=dedented_text)
     originalList = original.split("\n")
     oLen = len(originalList)
-    return originalList[cnt]
+    json_data = []
+    dataList = {}
+    dataList["sizeOfFile"] = oLen - 1
+    json_data.append(dataList)
+    index = 0
+    for elem in originalList:
+        dataList[str(index)] = elem
+        index = index + 1
+    fileDetails = json.dumps(dataList)
+    return fileDetails
 
 
 
@@ -102,6 +113,4 @@ def fileContentWithPageNumber(data):
     fileContent = fetchFileContent(fileName)
     return makePageWiseContent(fileContent,fontSize,pageCount)
 
-
-textWrapWidthList = maketextWraperList([10,15,20,25])
 

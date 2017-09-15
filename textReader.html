@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="reader" ng-controller="readerController">
+<html ng-app="reader" ng-controller="readerController"  ng-init = "count=0">
 <head>
   <script src ="angular.min.js"></script>
   <script src ="jquery.min.js"></script>
@@ -20,12 +20,11 @@
     <h1> fileReader </h1>
     <textarea rows ="1" cols="10" readonly>{{name}}</textarea>
     <select ng-options="s for s in fontSize" ng-model="size" ng-change ="getselectval(size)">
-     <option value ="">--fontSize--</option>
     </select>
-    <label ng-style ="fontObj" ng-bind = "fileContent" ></label><br>
+    <label ng-style ="fontObj" > {{fileData[count + ""]}} </label><br>
     <button ng-click="nextPage()"> next </button>
     <button ng-click="backPage()"> previous </button>
-    {{cnt}}
+    {{count}} {{"out of page"}} {{fileData["sizeOfFile"]}}
   </div>
 </body>
 </html>
