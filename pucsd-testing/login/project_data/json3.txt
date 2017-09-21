@@ -1,5 +1,0 @@
-[{"RollNumber":15126,
-"appId":"APBN",
-"Document":"BONAFIDE CERTIFICATE",
-"Remark":"wrong data"}	
-]

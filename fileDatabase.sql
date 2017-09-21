@@ -9,13 +9,8 @@ CREATE TABLE IF NOT EXISTS fileDomain (
 );
 
 CREATE TABLE IF NOT EXISTS fontSizeDomain (
-  fontSize integer NOT NULL primary key
+  fontSize integer NOT NULL Primary key
 );
-
-CREATE TABLE IF NOT EXISTS userDetailsDomain (
-  userId text NOT NULL primary Key,
-  name text NOT NULL,
-)
 
 insert into fileDomain(filename,filePath,fileContent) values("r.txt","/home/reshma/InternShip/textReader/r.txt",readfile("r.txt"));
 

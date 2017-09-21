@@ -1,2 +1,0 @@
-def testttt():
-		return "hello"

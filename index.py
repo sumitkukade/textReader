@@ -91,11 +91,10 @@ def getFontSize():
     return dataList
 
 
-def main(data):
-    data_dict = json.loads(data)
-    fontSize = data_dict["fontSize"] 
-    fileName = data_dict["fileName"]
-    pageCount = data_dict["pageCount"]
+def main(req):
+    req.content_type="Content-Type: application/text"
+    fileName = req.form.get("fileName","param")
+    fileName,pageCount,fontSize = fileName.split(" ")
     fontSize = int(fontSize)
     pageCount = int(pageCount)
     if(fileExists(fileName) == 0):
@@ -113,4 +112,26 @@ def fileContentWithPageNumber(data):
     fileContent = fetchFileContent(fileName)
     return makePageWiseContent(fileContent,fontSize,pageCount)
 
+#-----------------------------------------------------------------------------------------------------------------#
+#This function for  userLogin
+#-----------------------------------------------------------------------------------------------------------------#
+
+def add_user(username,password):
+    cwd = os.path.abspath(__file__)[:-8]
+    if os.path.exists(cwd+"login/.htpasswd") == False:
+        ht = HtpasswdFile(cwd+"login/.htpasswd", new=True)
+        result = ht.set_password(username, password)
+        ht.save()
+        return result
+    else:
+        ht = HtpasswdFile(cwd+"login/.htpasswd")
+        result = ht.set_password(username, password)
+        ht.save()
+        if result == False:
+           return True
+
+def check_user_password_htpasswd(username,password):
+    cwd = os.path.abspath(__file__)[:-8]
+    ht = HtpasswdFile(cwd+"login/.htpasswd")
+    return ht.check_password(username, password)
 

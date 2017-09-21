@@ -1,23 +1,31 @@
 var app = angular.module("reader", [])
-app.controller("readerController", function($scope) {
-    var fontSize = 20;
+app.controller("readerController", function($scope,$http) {
+    $scope.Size = 20;
     $scope.fetchFileContent = function() {
     $scope.fontSize = ["10","15","20","25","30"];
-    var request = {}
+    $scope.formData = {};
     $scope.cnt = 0;
-    request["fileName"] = $scope.name;
-    request["fontSize"] = fontSize;
-    request["pageCount"] = $scope.cnt;
-    $.post("index.py/main",{data:JSON.stringify(request)}).done(function(response) {
-      if(response == 0) {
+    $scope.fileDetails = $scope.name+" "+$scope.cnt+" "+$scope.Size;
+    $scope.formData["fileName"] = $scope.fileDetails;
+    $http({
+      url:"index.py/main",
+      method: "POST",
+      data:$.param($scope.formData),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+    .then(function(response) {
+      console.log(response["data"]);
+      if(response["data"] == "0"){
         $scope.fileNotExists = 1;
-        alert("Invalid file");
-      } else {
-           $scope.fileExists =  1;
-            $scope.fileData = JSON.parse(response)
-           $scope.fontObj = {
-              "font-size": fontSize+"px"
-           }
+        $scope.Error = "Invalid File Name!!!!";
+      }
+      else {
+         $scope.fileExists = 1;
+         $scope.fileData = response["data"];
+         var size = $scope.Size;
+         $scope.fontObj = {
+              "font-size": size+"px"
+         }
       }
     });
     $scope.nextPage = function() {
@@ -38,19 +46,23 @@ app.controller("readerController", function($scope) {
       }
     }
  }
+
     $scope.getselectval = function(size) {
-         var request = {}
-         request["fontSize"] = size;
-         request["fileName"] = $scope.name;
-         request["pageCount"] = $scope.cnt;
-         alert($scope.name+size+$scope.cnt);
-         $.post("index.py/main",{data:JSON.stringify(request)}).done(function(response) {
-             alert(response);
-              console.log($scope.fileContent);
-         });
-         $scope.fontObj = {
+         $scope.formData = {};
+         $scope.fileDetails = $scope.name+" "+$scope.count+" "+size;
+         $scope.formData["fileName"] = $scope.fileDetails;
+         $http({
+                url:"index.py/main",
+                method: "POST",
+                data:$.param($scope.formData),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+         })
+         .then(function(response) {
+           $scope.fileData = response["data"];
+           $scope.fontObj = {
               "font-size": size+"px"
          }
-    }
 
+         });
+    }
 });
