@@ -1,22 +1,28 @@
 import os
 from passlib.apache import HtpasswdFile
 import json
+
+# function for adding User
 def add_user(username,password):
     cwd = os.path.abspath(__file__)[:-8]
-    if os.path.exists(".htpasswd") == False:
-        ht = HtpasswdFile(".htpasswd", new=True)
+    if os.path.exists(cwd+".htpasswd") == False:
+        ht = HtpasswdFile(cwd+".htpasswd", new=True)
         result = ht.set_password(username, password)
         ht.save()
-	return result
+        return result
     else:
-        ht = HtpasswdFile(".htpasswd")
+        ht = HtpasswdFile(cwd+".htpasswd")
         result = ht.set_password(username, password)
         ht.save()
         if result == False:
             return True
+        else:
+            return False
 
+# check username and password 
 def check_user_password_htpasswd(username,password):
-    ht = HtpasswdFile(".htpasswd")
+    cwd = os.path.abspath(__file__)[:-8]
+    ht = HtpasswdFile(cwd+".htpasswd")
     return ht.check_password(username, password)
 
 def login(data):
